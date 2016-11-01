@@ -61,3 +61,7 @@ class Staff(Employee):
 
         super.__init__(name, phone, email, address, employee_number)
         self.department = department
+
+    def grade(self):
+        """Implement employee grade here"""
+
