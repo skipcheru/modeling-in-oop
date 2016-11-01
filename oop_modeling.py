@@ -1,4 +1,6 @@
-""" Problem modeling using OOP by modelling my music Library"""
+""" Problem modeling using OOP by modelling my music Library
+"""
+
 
 class Person(object):
 
@@ -55,7 +57,6 @@ class Album(object):
         self.list_of_songs.append(song)
 
 """Create new playlist here"""
-
 
 class Playlist(object):
     def __init__(self, name):
