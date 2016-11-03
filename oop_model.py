@@ -1,67 +1,85 @@
+from abc import abstractclassmethod
 
-class Person(object):
-    """
-    Information about a Person. More general including name, email and address
-    """
-    def __init__(self, name, phone, email, address):
-        """Create a Person with above attributes"""
+
+# Class person is the base class
+class Person:
+    def __init__(self, name, phone):
         self.name = name
         self.phone = phone
-        self.email = email
-        self.address = address
 
+    # Print Person object in a readable format
     def __str__(self):
-        """Return a readable format of a Person"""
-        return """Name: {0} Phone: {1} Email: {2}  Address: {3} """\
-            .format(self.name, self.phone, self.email, self.address)
+        return """Name: {0} Phone: {1} """.format(self.name, self.phone)
 
 
 class Student(Person):
-
-    def __init__(self, name, phone, email, address, reg_number, course, fee_balance):
-
-        super.__init__(name, phone, email, address)
+    def __init__(self, reg_number, *args, **kwargs):
         self.reg_number = reg_number
-        self.course = course
-        self.fee_balance = fee_balance
+        self.course = []
+        self.grades = []
+        self.program = None
+        super().__init__(*args, **kwargs)
 
-    def course(self):
-        return self.course
+    @abstractclassmethod
+    def add_course_grade(self, course, grade):
+        # this method must be implemented in all inheriting objects
+        pass
+
+    @property
+    def enroll(self, program):
+        self.program = program
+        return self
 
     def is_enrolled(self):
-        """ Implement enroll for a course here"""
+        if self.enroll is not None:
+            return "Enrolled in :", self.enroll
+
 
 class PartTimeStudent(Student):
-    def __init__(self, name, phone, email, address, reg_number, course, class_days):
-        super.__init__(name, phone, email, address, reg_number, course)
-        self.class_days = class_days[:]
+    def __init__(self, student_type, *args, **kwargs):
+        self.class_days = []
+        self.student_type = student_type
+        super().__init__(*args, **kwargs)
 
-    def days_for_class(self):
-        return self.class_days
+    def add_course_grade(self, course, grade):
+        self.course.append(course)
+        self.grades.append(grade)
 
-"""Multiple Inheritance here"""
+    def student_type(self):
+        return self.student_type
+
 
 class Employee(Person):
-    def __init__(self, name, phone, email, address, employee_number):
-
-        super.__init__(name, phone, email, address)
+    def __init__(self, employee_number, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.employee_number = employee_number
 
 
 class Lecturer(Employee):
-    def __init__(self, name, phone, email, address, employee_number, faculty, rank):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.faculties = []
 
-        super.__init__(name, phone, email, address, employee_number)
-        self.faculty = faculty
-        self.rank = rank
+    def add_faculty(self, faculty):
+        self.faculties.append(faculty)
 
 
 class Staff(Employee):
-    def __init__(self, name, phone, email, address, employee_number, department):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.departments = []
+        self.staff_ranks = []
 
-        super.__init__(name, phone, email, address, employee_number)
-        self.department = department
+    # Add staff to department
+    def add_department(self, department):
+        self.department.append(department)
 
-    def grade(self):
-        """Implement employee grade here"""
+    # Add Staff ranks
+    def add_faculty(self, level):
+        self.staff_ranks.append(level)
+
+
+student = Student("sam", "1223445", "f3333")
+print(student)
+print(student.is_enrolled())
 
